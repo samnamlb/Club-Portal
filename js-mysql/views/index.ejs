@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <title>MCHS Club Portal</title>
+    <link rel="stylesheet" type="text/css" href="./public/main.css">
+</head>
+<body>
+<header>
+    <nav>
+        <ul>
+            <li><a href="#">Home</a></li>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#">Contacts</a></li>
+            <!-- Other navigation items -->
+        </ul>
+    </nav>
+</header>
+<div class="container">
+    <div class="content">
+        <main class="club-listings">
+            <section class="side-bar-listings">
+                <!-- Listings for club search -->
+                <ul class="club-name-list">
+                    <%
+                    organizations.forEach(function(organization) { %>
+                        <li><a href="#" data-club-name="<%= organization.club_name %>"
+                               data-club-id="<%= organization.club_id %>"
+                               data-club-advisor="<%= organization.club_advisor %>"
+                               data-club-pres="<%= organization.club_pres %>"
+                               data-club-time="<%= organization.meet_time %>"
+                               data-club-room="<%= organization.room_no %>"
+                               data-club-desc="<%= organization.club_description %>">
+                                <%= organization.club_name %>
+                            </a>
+                        </li>
+                    <% }); %>
+                </ul>
+            </section>
+
+            <section class="clubs">
+                <!-- Club listings -->
+                <div class="club-item">
+                    <h2 class="club-header-title">Club Name</h2>
+                    <br>
+                    <div class="club-description">Description</div>
+                    <br>
+                    <!-- Other club details -->
+                    <div class="club-details-item">
+                        <ul id="clubDetailsList">
+                            <li class="advisor">Club Advisor:</li>
+                            <li class="president">President:</li>
+                            <li class="meet-time">Meet Time:</li>
+                            <li class="room">Room:</li>
+                        </ul>
+                    </div>
+                </div>
+
+            </section>
+        </main>
+    </div>
+</div>
+
+<footer>
+    <!-- Footer content -->
+    <p>&copy; 2023 MCHS Club Portal. All rights reserved.</p>
+</footer>
+<script
+        src="https://code.jquery.com/jquery-1.12.4.js"
+        integrity="sha256-Qw82+bXyGq6MydymqBxNPYTaUXXq7c8v3CwiYwLLNXU="
+        crossorigin="anonymous"></script>
+
+
+<script>
+
+
+    $(document).ready(function () {
+        // Set the max-height of the container to the window height
+        $(".side-bar-listings").css("max-height", $(window).height() - 200);
+
+        // Update the max-height on window resize
+        $(window).resize(function () {
+            $(".side-bar-listings").css("max-height", $(window).height() - 200);
+        });
+
+        $(".club-name-list li a").click(function (event) {
+            console.log("Clicking")
+            // Define organizations array with EJS data
+
+
+            event.preventDefault(); // Prevent the default behavior of the anchor tag
+
+            // Get the organization data associated with the clicked club name
+            var clubId = $(this).data("club-id");
+            var clubName = $(this).data("club-name");
+            var clubDesc = $(this).data("club-desc");
+            var clubAdvisor = $(this).data("club-advisor");
+            var clubPresident = $(this).data("club-pres");
+            var clubMeetTime = $(this).data("club-time");
+            var clubRoom = $(this).data("club-room");
+
+            // Update club details in the clubDetailsList
+            $(".club-header-title").text(clubName);
+            $(".club-description").text(clubDesc);
+            $(".club-details-item .advisor").text("Club Advisor: " + clubAdvisor);
+            $(".club-details-item .president").text("President: " + clubPresident);
+            $(".club-details-item .meet-time").text("Meet Time: " + clubMeetTime);
+            $(".club-details-item .room").text("Room: " + clubRoom);
+
+
+        });
+    });
+
+</script>
+</body>
+</html>
